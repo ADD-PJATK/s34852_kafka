@@ -1,13 +1,57 @@
-const TICKERS = [
-  "ACME",
-  "ALFA",
-  "BETA",
-  "DELTA",
-  "OMEGA",
-  "XYZ",
-  "FOO",
-  "BAR",
+const CATALOG = [
+  { ticker: "ACME", company: "ACME Corp." },
+  { ticker: "ALFA", company: "Alfa Technologies" },
+  { ticker: "BETA", company: "Beta Retail Group" },
+  { ticker: "CASH", company: "CashBank" },
+  { ticker: "CLOUD", company: "CloudNine" },
+  { ticker: "COAL", company: "Coal Energy" },
+  { ticker: "COPR", company: "Copper Mining Co." },
+  { ticker: "DATA", company: "DataWorks" },
+  { ticker: "DEVS", company: "DevStudio" },
+  { ticker: "DRON", company: "Dronix" },
+  { ticker: "ECO", company: "EcoPower" },
+  { ticker: "EDU", company: "EduNext" },
+  { ticker: "ENRG", company: "Energo" },
+  { ticker: "FARM", company: "FarmFoods" },
+  { ticker: "FINX", company: "FinX" },
+  { ticker: "FOOD", company: "FoodBox" },
+  { ticker: "FUEL", company: "FuelOne" },
+  { ticker: "GAME", company: "GameForge" },
+  { ticker: "GRIN", company: "GreenInvest" },
+  { ticker: "HEAL", company: "HealTech" },
+  { ticker: "HOME", company: "HomeBuild" },
+  { ticker: "HYPE", company: "HypeMedia" },
+  { ticker: "INSR", company: "InsureCo" },
+  { ticker: "IOT", company: "IoTSystems" },
+  { ticker: "JET", company: "JetLogistics" },
+  { ticker: "LABS", company: "LabsResearch" },
+  { ticker: "LEND", company: "Lendify" },
+  { ticker: "LOGI", company: "LogiWare" },
+  { ticker: "MALL", company: "Mall Retail" },
+  { ticker: "MEDI", company: "MediCare" },
+  { ticker: "META", company: "MetaCom" },
+  { ticker: "MOBI", company: "MobiTel" },
+  { ticker: "MOVE", company: "MoveNow" },
+  { ticker: "NET", company: "Netlink" },
+  { ticker: "NOVA", company: "Nova Ventures" },
+  { ticker: "OILS", company: "OilSands" },
+  { ticker: "PARK", company: "Park Realty" },
+  { ticker: "PHAR", company: "Pharmax" },
+  { ticker: "PLNT", company: "Plantio" },
+  { ticker: "PROD", company: "Prodigo" },
+  { ticker: "QBIT", company: "QBit Quantum" },
+  { ticker: "RAIL", company: "Rail Cargo" },
+  { ticker: "ROBO", company: "RoboMakers" },
+  { ticker: "SAFE", company: "SafeSecurity" },
+  { ticker: "SHIP", company: "ShipIt" },
+  { ticker: "SHOP", company: "ShopNow" },
+  { ticker: "SOLR", company: "Solaris" },
+  { ticker: "TEL", company: "TelcoPlus" },
+  { ticker: "TRVL", company: "TravelBee" },
+  { ticker: "WATR", company: "WaterWorks" },
 ];
+
+const COMPANY_BY_TICKER = new Map(CATALOG.map((c) => [c.ticker, c.company]));
 
 /** @type {Map<string, {es: EventSource, status: 'connecting'|'open'|'error'|'closed', last?: any, history: number[], lastErr?: string, lastEventType?: string, lastRaw?: string}>} */
 const streams = new Map();
@@ -69,10 +113,12 @@ function ensureRow(ticker) {
   let tr = $rows.querySelector(`tr[data-ticker="${ticker}"]`);
   if (tr) return tr;
 
+  const company = COMPANY_BY_TICKER.get(ticker) ?? "—";
   tr = document.createElement("tr");
   tr.dataset.ticker = ticker;
   tr.innerHTML = `
     <td><code>${ticker}</code></td>
+    <td>${company}</td>
     <td class="num" data-k="price">—</td>
     <td data-k="ts">—</td>
     <td><canvas class="spark" width="120" height="28" data-k="spark"></canvas></td>
@@ -268,13 +314,13 @@ function unsubscribe(ticker) {
 
 function renderTickerList() {
   $tickerList.innerHTML = "";
-  for (const t of TICKERS) {
+  for (const c of CATALOG) {
     const label = document.createElement("label");
     label.className = "ticker";
     label.innerHTML = `
-      <input type="checkbox" data-ticker="${t}" />
-      <span class="sym">${t}</span>
-      <span class="muted">live</span>
+      <input type="checkbox" data-ticker="${c.ticker}" />
+      <span class="sym">${c.ticker}</span>
+      <span class="muted">${c.company}</span>
     `;
     $tickerList.appendChild(label);
   }
