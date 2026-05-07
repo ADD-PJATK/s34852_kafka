@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Prices (SSE)</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div>
+          <h1>Live price updates</h1>
+          <p class="sub">
+            Select tickers to subscribe. Data streams from <code>/api/stream</code>.
+          </p>
+        </div>
+        <div class="pill" id="connStatus">Disconnected</div>
+      </header>
+
+      <main class="grid">
+        <section class="card">
+          <h2>Tickers</h2>
+          <div class="tickerList" id="tickerList"></div>
+          <div class="row">
+            <button id="clearBtn" class="btn secondary" type="button">
+              Clear selection
+            </button>
+          </div>
+          <p class="hint">
+            Tip: set <code>API_KEY</code> on the server, then open
+            <code>http://localhost:3000</code>.
+          </p>
+        </section>
+
+        <section class="card">
+          <h2>Live</h2>
+          <div class="tableWrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th class="num">Price</th>
+                  <th>Timestamp</th>
+                  <th>Last ~30 ticks</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+          <div class="foot">
+            <span class="muted"
+              >Each selected ticker opens an EventSource connection.</span
+            >
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
+
