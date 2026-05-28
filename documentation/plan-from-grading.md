@@ -1,10 +1,12 @@
-# AI-Assisted Work Plan — ADD Project
+# Phase A — Plan from Phase 2 grading feedback
 
-**Student:** Yokubjon Sulaymonov
-**Student ID:** s34852
+**Student:** Yokubjon Sulaymonov  
+**Student ID:** s34852  
 **Last Updated:** 2026-05-21  
 **Course:** Analysis of Large Data Sets (ADD)  
-**Main Repository:** https://github.com/ADD-PJATK/s34852_kafka
+**Repository:** https://github.com/ADD-PJATK/s34852_kafka
+
+This document is the Phase A plan (evolved from Phase 2 AI work-plan feedback). Phase B uses `prompt.md`; evidence goes in `ai-fix-log.md`.
 
 ---
 
@@ -315,3 +317,4 @@ The final responsibility for all content, implementations, and submitted work re
 |---|---|---|
 | 2026-05-21 | 0.1 | Initial draft created with AI assistance |
 | 2026-05-21 | 1.0 | Added project-specific workflows, precautions, and task plans |
+| 2026-05-28 | 1.1 | Renamed to Phase A plan; repo reshaped for AA4 mock + integration |

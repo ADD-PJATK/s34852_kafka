@@ -1,22 +1,22 @@
-# Live price updates (SSE)
+# Live price updates (SSE) — AA2
+
+Optional Assignment 2 dashboard. Uses the course upstream API when `API_KEY` is set, or point `UPSTREAM_BASE` at the local mock (`http://localhost:4000`).
 
 ## Run locally (PowerShell)
 
 ```powershell
-cd <path-to-your-cloned-repo>
-
+cd kafka-stocks
 npm install
-
-$env:API_KEY="<PUT_YOUR_KEY_HERE>"
-
+$env:API_KEY="<PUT_YOUR_KEY_HERE>"   # omit when using mock/server only
 npm run dev
 ```
 
-Then open the URL printed in the terminal, e.g. `http://localhost:3000` (or `:3001` if 3000 is taken).
+Open the URL printed in the terminal (default `http://localhost:3000`).
 
 ## Use
 
-1. In the left panel, **select one or more tickers** (checkboxes).
-2. Watch the “Live” table for **ticker / price / timestamp** updates.
-3. Click **“Clear selection”** to unsubscribe from all streams.
+1. Select tickers in the left panel.
+2. Watch live price and timestamp updates.
+3. Click **Clear selection** to unsubscribe.
 
+For AA4 work on `main`, prefer `mock/client-dashboard` and `scripts/run_mock.ps1`.

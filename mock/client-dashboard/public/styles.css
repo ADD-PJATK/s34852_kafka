@@ -1,0 +1,18 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 2rem;
+  background: #0f1117;
+  color: #e8eaf2;
+}
+.muted {
+  color: #9aa3b2;
+}
+table {
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+th,
+td {
+  border: 1px solid #2a3142;
+  padding: 0.5rem 1rem;
+}
