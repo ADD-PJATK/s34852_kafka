@@ -1,0 +1,26 @@
+[
+  {
+    "ticker": "ACME",
+    "ts": "2026-05-28T10:00:00.000Z",
+    "price": 101.25,
+    "analyst_email": "jane.doe@acme-fictional.example",
+    "employee_id": "EMP-ACME-0042",
+    "internal_note": "pre-release guidance — fictional"
+  },
+  {
+    "ticker": "ACME",
+    "ts": "2026-05-28T10:00:05.000Z",
+    "price": 101.4,
+    "analyst_email": "jane.doe@acme-fictional.example",
+    "employee_id": "EMP-ACME-0042",
+    "internal_note": "desk commentary — fictional"
+  },
+  {
+    "ticker": "ALFA",
+    "ts": "2026-05-28T10:00:00.000Z",
+    "price": 44.1,
+    "analyst_email": "ops@alfa-fictional.example",
+    "employee_id": "EMP-ALFA-0007",
+    "internal_note": "synthetic tick for local mock"
+  }
+]

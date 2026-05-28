@@ -1,0 +1,7 @@
+[
+  { "ticker": "ACME", "company": "ACME Corp." },
+  { "ticker": "ALFA", "company": "Alfa Technologies" },
+  { "ticker": "BETA", "company": "Beta Retail Group" },
+  { "ticker": "DATA", "company": "DataWorks" },
+  { "ticker": "FINX", "company": "FinX" }
+]

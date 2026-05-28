@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mock stock dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Mock live ticks</h1>
+      <p id="status" class="muted">Pick a ticker</p>
+      <label>
+        Ticker
+        <select id="ticker"></select>
+      </label>
+      <table>
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Price</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="sym">—</td>
+            <td id="price">—</td>
+            <td id="ts">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
