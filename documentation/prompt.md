@@ -1,55 +1,39 @@
 # Phase B — One-shot agent prompt
 
-Use this file as the **single prompt** you paste into Cursor (or another agent) for Phase B. Fill in the bracketed sections before running.
+> **Phase A:** leave this file as a skeleton. During Phase B (~30 min) replace the block below with your **single** high-quality prompt, then run it **once** in Cursor Agent.
+
+Do **not** paste secrets, API keys, or real personal data.
 
 ---
 
-## Context
+## Checklist before you run (Phase B)
 
-- **Repo:** `s34852_kafka` (ADD course, AA4 on `main`)
-- **Goal:** Wire `integration/pipeline` so it streams from `mock/server`, exports ticks, runs `anonymizer/` on the export, and writes redacted output to `integration/pipeline/out/`.
-- **Tests:** `integration/tests/` must pass after your changes (they fail on purpose before Phase B).
+- [ ] Phase A commit is pushed to `origin/main` (broken baseline)
+- [ ] Mock stack fails or tests fail for the reasons in `plan-from-grading.md` §10
+- [ ] Prompt includes: stack versions, layout, run commands, acceptance criteria, safety rules, debugging playbook
+- [ ] Prompt is **not** trivial (“run the app”, “fix everything”)
 
-## Constraints
+---
 
-- Do not add runtime LLM/API calls inside the anonymizer (AA1 rule).
-- Use only fictional data from `mock/fixtures/`.
-- Keep diffs minimal; match existing Node/Python style in the repo.
-- Do not commit secrets or `.env` files.
-
-## Tasks
-
-1. Restore or verify `anonymizer/` from branch `backup` if the folder is still a stub.
-2. Implement or fix `integration/pipeline` (stream → `export/` → anonymize → `out/`).
-3. Ensure `mock/server` endpoints match what the pipeline and dashboard expect.
-4. Make `scripts/demo.ps1` (and `.sh`) succeed end-to-end.
-5. Update `documentation/ai-fix-log.md` with what you changed and how you verified it.
-
-## Acceptance criteria
-
-- [ ] `.\scripts\run_tests.ps1` exits 0
-- [ ] `out/` contains no keys: `analyst_email`, `employee_id`, `internal_note`
-- [ ] README quick-start commands still work
-- [ ] No unrelated files refactored
-
-## Prompt (copy below)
+## Your prompt (paste into the agent — fill in during Phase B)
 
 ```
-You are working in s34852_kafka on branch main.
+[TODO — write your one-shot prompt here before running the agent.
 
-Fix the integration pipeline and anonymizer wiring so integration/tests pass.
-
-Read documentation/plan-from-grading.md and documentation/ai-fix-log.md first.
-Run scripts/run_tests.ps1 after each change.
-
-Requirements:
-- Stream from MOCK_BASE (default http://localhost:4000) for ticker ACME
-- Export NDJSON to integration/pipeline/export/
-- Run anonymizer on that export; output to integration/pipeline/out/
-- Strip fictional PII fields: analyst_email, employee_id, internal_note
-- Do not use cloud AI inside the anonymizer at runtime
-
-If anonymizer/ is empty, run: git checkout backup -- anonymizer
-
-If unsure, ask clarifying questions before coding.
+Include at minimum:
+- Python 3.x + Node 20 (or your versions)
+- Paths: mock/server, mock/client-dashboard, integration/pipeline, integration/tests, anonymizer/
+- Commands: npm install, scripts/run_mock.ps1, node integration/pipeline/run.mjs, scripts/run_tests.ps1, scripts/demo.ps1
+- Acceptance: all integration tests pass; out/ has no trader_email, operator_name, comment; offline only
+- Safety: no secrets; anonymizer deterministic (mappings.json); no external API
+- Debug: run tests first; inspect SSE "data:" lines; check CLI flags (--in/--out vs --input/--output); verify mappings.json field names match fixtures
+]
 ```
+
+---
+
+## After the run
+
+1. Update `documentation/ai-fix-log.md` with failure logs, fixes, and passing `demo.ps1` output.
+2. Export this chat to `documentation/ai-chat/` (see README there).
+3. Push final `main` for MS Teams (repo URL + Phase A commit URL).

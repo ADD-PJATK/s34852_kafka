@@ -6,7 +6,14 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outDir = path.join(__dirname, "..", "pipeline", "out");
-const SENSITIVE = ["analyst_email", "employee_id", "internal_note"];
+const SENSITIVE = [
+  "trader_email",
+  "operator_name",
+  "comment",
+  "analyst_email",
+  "employee_id",
+  "internal_note",
+];
 
 test("pipeline out/ has no fictional PII fields", async () => {
   if (!fs.existsSync(outDir)) {

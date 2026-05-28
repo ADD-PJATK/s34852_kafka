@@ -71,9 +71,9 @@ app.get("/api/stream", (req, res) => {
       ticker,
       ts,
       price: base,
-      analyst_email: `desk+${ticker.toLowerCase()}@fictional.example`,
-      employee_id: `EMP-${ticker}-MOCK`,
-      internal_note: `mock tick #${n}`,
+      trader_email: `desk+${ticker.toLowerCase()}@fictional.example`,
+      operator_name: `Desk ${ticker} (fictional)`,
+      comment: `mock tick #${n}`,
     };
     latestByTicker.set(ticker, payload);
     res.write(`event: tick\ndata: ${JSON.stringify(payload)}\n\n`);

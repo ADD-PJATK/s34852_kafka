@@ -24,10 +24,22 @@ Set `MOCK_PORT` / `DASHBOARD_PORT` to override defaults.
 ## Integration demo
 
 ```powershell
+cd integration\pipeline
+node run.mjs
+..\scripts\run_tests.ps1
+```
+
+Or use the all-in-one script (starts mock, runs pipeline, runs tests):
+
+```powershell
 .\scripts\demo.ps1
 ```
 
-Runs the pipeline against the mock server and executes integration tests. Tests are **expected to fail** until Phase B wiring and anonymizer fixes are complete.
+**Phase A:** tests and demo are **expected to fail** until Phase B fixes (see `documentation/plan-from-grading.md` §10).
+
+## Backup branch
+
+Pre-AA4 work is on `backup/pre-aa4-2026-05-28` on the remote.
 
 ## Repository layout
 

@@ -311,6 +311,56 @@ The final responsibility for all content, implementations, and submitted work re
 
 ---
 
+# 10. AA4 mock integration plan (Phase A)
+
+Based on my Phase 2 outcome (unified repo, AA1 + AA2 present, documentation graded). In my own words: the repo structure and README were acceptable, but **end-to-end integration** between streaming data and the anonymizer was not demonstrated, **run instructions** were easy to get wrong (paths, ports), and **tests** were missing for the combined flow.
+
+## What I will mock (offline only)
+
+| Component | Local substitute |
+|-----------|------------------|
+| Instructor stock API | `mock/server` on `localhost:4000` |
+| Live dashboard | `mock/client-dashboard` on `4001` (proxies mock API) |
+| SSE consumer + export | Dashboard buffers last **20** ticks; JSON/CSV export buttons |
+| Anonymizer | `anonymizer/` + `mappings.json` (deterministic, no HTTP/LLM) |
+| Proof | `integration/tests` + `scripts/demo.ps1` |
+
+Fictional sensitive fields in fixtures/stream: `trader_email`, `operator_name`, `comment`.
+
+## Success criteria (after Phase B)
+
+- `scripts/demo.ps1` exits 0 with mock on `4000`.
+- `integration/pipeline/out/*.ndjson` has **no** `trader_email`, `operator_name`, `comment`.
+- All tests in `integration/tests/` pass with `MOCK_BASE=http://127.0.0.1:4000`.
+- No secrets on `main`; no calls to `add.piotrkojalowicz.dev`.
+
+## Intentional Phase A weaknesses (for the agent to fix)
+
+These are **deliberate** on `main` before Phase B (not listed in `prompt.md`):
+
+| # | Weakness | How to detect |
+|---|----------|----------------|
+| 1 | Pipeline calls `--input`/`--output`; anonymizer expects `--in`/`--out` | Anonymizer stderr / argparse error |
+| 2 | `run.mjs` resolves `anonymizer` under `integration/` (one `..` too few) | `anonymize.py not found` |
+| 3 | SSE collector splits on `\n` instead of `\n\n` | `JSON.parse` error on `data: {...}` or too few ticks |
+| 4 | `mappings.json` still lists legacy keys (`analyst_email`, …) not stream fields | Tests pass mapping step but PII keys remain |
+| 5 | `run_tests` defaults to port **4001** | Mock API tests fail if only port 4000 is running |
+| 6 | `export-path.test.mjs` looks under `integration/export/` | Wrong-path assertion |
+| 7 | README suggests manual `node run.mjs` without starting mock | Connection refused |
+| 8 | Dashboard CSV export uses `;` delimiter | Broken import in Excel (documented in fix log) |
+
+## Anticipated failure modes (agent debugging)
+
+1. **ECONNREFUSED on fetch** — mock not running or wrong `MOCK_BASE` / port mismatch.  
+2. **SyntaxError parsing SSE** — inspect raw `data:` lines; fix event framing (`\n\n`).  
+3. **Anonymizer exit code ≠ 0** — compare CLI flags between `run.mjs` and `anonymize.py --help`.  
+4. **PII still in `out/`** — open `mappings.json` `find[]` vs actual NDJSON keys.  
+5. **Tests pass API but fail export path** — read `export-path.test.mjs` expected directory.  
+6. **Race** — run `demo.ps1` (waits for `/api/tickers`) instead of raw `run_tests` before mock is up.  
+7. **Wrong working directory** — run pipeline from repo root via documented scripts, not only `cd integration/pipeline`.
+
+---
+
 # 9. Revision Log
 
 | Date | Version | Change |
@@ -318,3 +368,4 @@ The final responsibility for all content, implementations, and submitted work re
 | 2026-05-21 | 0.1 | Initial draft created with AI assistance |
 | 2026-05-21 | 1.0 | Added project-specific workflows, precautions, and task plans |
 | 2026-05-28 | 1.1 | Renamed to Phase A plan; repo reshaped for AA4 mock + integration |
+| 2026-05-28 | 1.2 | Added §10 AA4 mock plan, failure modes, intentional bugs |

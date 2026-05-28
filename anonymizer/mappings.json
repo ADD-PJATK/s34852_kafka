@@ -1,0 +1,7 @@
+{
+  "rules": [
+    { "find": ["analyst_email"], "replace": "REDACTED_EMAIL" },
+    { "find": ["employee_id"], "replace": "REDACTED_ID" },
+    { "find": ["internal_note"], "replace": "REDACTED_NOTE" }
+  ]
+}

@@ -9,3 +9,5 @@ node run.mjs
 ```
 
 Environment: `MOCK_BASE`, `PIPELINE_TICKER`, `PIPELINE_TICK_COUNT`, `PYTHON`.
+
+**Phase A:** expect failures until SSE parsing, anonymizer path/CLI, and `mappings.json` keys are fixed (see `documentation/plan-from-grading.md` §10).

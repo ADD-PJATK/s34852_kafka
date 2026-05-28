@@ -1,6 +1,6 @@
 /**
  * stream → export → anonymize → out/
- * Phase B: complete anonymizer wiring so tests pass.
+ * Phase A baseline: deliberate wiring bugs (fixed in Phase B).
  */
 import fs from "fs";
 import path from "path";
@@ -35,12 +35,13 @@ async function collectStream() {
     const { done, value } = await reader.read();
     if (done) break;
     buffer += decoder.decode(value, { stream: true });
-    const parts = buffer.split("\n\n");
+    // BUG (Phase A): SSE events are separated by blank lines (\n\n), not single \n
+    const parts = buffer.split("\n");
     buffer = parts.pop() ?? "";
     for (const block of parts) {
-      const dataLine = block.split("\n").find((l) => l.startsWith("data: "));
+      const dataLine = block.split("\n").find((l) => l.startsWith("data:"));
       if (!dataLine) continue;
-      lines.push(dataLine.slice(6));
+      lines.push(JSON.parse(dataLine));
       if (lines.length >= TICK_COUNT) break;
     }
   }
@@ -60,13 +61,14 @@ async function collectStream() {
 }
 
 function runAnonymizer(inputPath) {
-  const repoRoot = path.join(__dirname, "..", "..");
+  // BUG (Phase A): one directory level short — points at integration/anonymizer
+  const repoRoot = path.join(__dirname, "..");
   const anonymizerDir = path.join(repoRoot, "anonymizer");
   const script = path.join(anonymizerDir, "anonymize.py");
 
   if (!fs.existsSync(script)) {
     throw new Error(
-      "anonymizer/anonymize.py missing. Restore with: git checkout backup -- anonymizer",
+      `anonymizer/anonymize.py not found at ${script}. Check repoRoot in run.mjs.`,
     );
   }
 

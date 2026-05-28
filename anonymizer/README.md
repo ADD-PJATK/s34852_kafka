@@ -11,10 +11,10 @@ git checkout backup -- anonymizer
 The integration pipeline calls:
 
 ```bash
-python anonymize.py --input <export.ndjson> --output <out.ndjson>
+python anonymize.py -i <export.ndjson> -o <out.ndjson>
 ```
 
-Adjust `anonymize.py` argument names in `integration/pipeline/run.mjs` if your AA1 CLI differs.
+Mapping rules live in `mappings.json` (`find[]` → `replace`).
 
 ## Rules
 
